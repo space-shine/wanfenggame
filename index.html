@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>挽风</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/dialogue.css">
+<link rel="stylesheet" href="css/actor.css">
+<link rel="stylesheet" href="css/ui-phone.css">
+<link rel="stylesheet" href="css/ui-save.css">
+<link rel="stylesheet" href="css/ui-library.css">
+<link rel="stylesheet" href="css/ui-todo.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ============ 主菜单 ============ -->
+<section id="screen-title" class="screen active">
+  <div class="title-bg"></div>
+  <div class="title-content">
+    <h1 class="game-title">挽&nbsp;风</h1>
+    <p class="game-sub">风起不知意，风落尽是殇</p>
+    <nav class="main-menu">
+      <button class="menu-btn" data-action="start">开始游戏</button>
+      <button class="menu-btn" data-action="load" disabled>读取存档</button>
+      <button class="menu-btn" data-action="ach-page">成就系统</button>
+      <button class="menu-btn" data-action="gallery">收集</button>
+      <button class="menu-btn" data-action="playinfo">游玩信息</button>
+      <button class="menu-btn" data-action="settings">游戏设置</button>
+    </nav>
+    <p class="title-version">原型 M4 · 技术验证版</p>
+  </div>
+</section>
+
+<!-- ============ 游戏画面 ============ -->
+<section id="screen-game" class="screen">
+  <!-- 舞台：背景 / 立绘 -->
+  <div id="stage">
+    <div id="bg-layer" class="bg-layer"></div>
+    <div id="char-layer" class="char-layer"></div>
+    <div class="scene-tag" id="scene-tag"></div>
+  </div>
+
+  <!-- 顶部 HUD -->
+  <header id="hud-top" class="hud-top">
+      <div class="hud-left">
+        <div class="hud-chapter" id="hud-chapter">挽风</div>
+        <div class="hud-date" id="hud-date">第 1 天 · 火车</div>
+        <div class="hud-todo" id="hud-todo"></div>
+      </div>
+    <div class="hud-buttons">
+      <button class="hud-icon" data-action="phone" title="手机" disabled>手机</button>
+      <button class="hud-icon" data-action="pc" title="电脑" disabled>电脑</button>
+      <button class="hud-icon" data-action="map" title="地图" disabled>地图</button>
+      <button class="hud-icon" data-action="people" title="人际" disabled>人际</button>
+      <button class="hud-icon" data-action="profile" title="我的档案">档案</button>
+      <button class="hud-icon" data-action="ach" title="成就">成就</button>
+      <button class="hud-icon" data-action="save" title="存档">存档</button>
+      <button class="hud-icon" data-action="settings" title="设置">设置</button>
+      <button class="hud-icon" data-action="title" title="主页">主页</button>
+    </div>
+  </header>
+
+  <!-- 对话 / 旁白 / 选项 区 -->
+  <div id="dialogue-area" class="dialogue-area hidden">
+    <div id="narration-box" class="narration-box hidden">
+      <p id="narration-text" class="narration-text"></p>
+    </div>
+
+    <div id="dialogue-box" class="dialogue-box hidden">
+      <div class="speaker-name" id="speaker-name"></div>
+      <div class="speaker-portrait" id="speaker-portrait"></div>
+      <p id="dialogue-text" class="dialogue-text"></p>
+    </div>
+
+    <div id="choice-box" class="choice-box hidden"></div>
+
+    <div class="continue-hint" id="continue-hint">▼ 点击继续</div>
+  </div>
+
+  <!-- 主界面行动面板（自由模式） -->
+  <div id="action-panel" class="action-panel hidden"></div>
+
+  <!-- 章节结束卡 -->
+  <div id="scene-end" class="scene-end hidden">
+    <p id="scene-end-text"></p>
+    <button class="menu-btn" data-action="title">返回标题</button>
+  </div>
+</section>
+<!-- ============ 成就 / 收集 单开页面 ============ -->
+<section id="screen-library" class="screen">
+  <aside class="library-side">
+    <button class="library-back" id="library-back">← 返回主菜单</button>
+    <h2 class="library-title" id="library-title">成就系统</h2>
+    <div class="library-list" id="library-list"></div>
+  </aside>
+  <main class="library-detail" id="library-detail">
+    <div class="library-empty">左侧选择一项查看详情</div>
+  </main>
+</section>
+<!-- ============ 设置弹窗 ============ -->
+<div id="modal-settings" class="modal hidden">
+  <div class="modal-panel">
+    <h2>游戏设置</h2>
+    <div class="setting-row">
+      <label>主音量</label>
+      <input type="range" id="set-volume" min="0" max="100" value="60">
+    </div>
+    <div class="setting-row">
+      <label>文本速度</label>
+      <input type="range" id="set-textspeed" min="0" max="100" value="60">
+    </div>
+    <div class="setting-row">
+      <label><input type="checkbox" id="set-autoplay"> 自动播放</label>
+    </div>
+    <div class="modal-actions">
+      <button class="menu-btn small" data-action="settings-close">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 人际弹窗 ============ -->
+<div id="modal-people" class="modal hidden">
+  <div class="modal-panel people-panel">
+    <h2>人际</h2>
+    <div class="people-body">
+      <div class="people-list" id="people-list"></div>
+      <div class="people-detail" id="people-detail"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="menu-btn small" data-action="people-close">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 校园地图弹窗 ============ -->
+<div id="modal-map" class="modal hidden">
+  <div class="modal-panel map-panel">
+    <h2 id="map-title">校园 · 选择去向</h2>
+    <p class="modal-tip" id="map-period"></p>
+    <div class="map-grid" id="map-grid"></div>
+    <div class="modal-actions">
+      <button class="menu-btn small" data-action="map-close">留在这里</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 手机弹窗 ============ -->
+<div id="modal-phone" class="modal hidden">
+  <div class="modal-panel phone-panel">
+    <div class="phone-top">微信</div>
+    <div class="phone-body">
+      <div class="phone-friends" id="phone-friends"></div>
+      <div class="phone-right">
+        <div class="phone-screen" id="phone-screen"></div>
+        <div class="phone-dock" id="phone-dock"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="menu-btn small" data-action="phone-close">收起手机</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 成就弹窗 ============ -->
+<!-- 电脑弹窗 -->
+<div id="modal-pc" class="modal hidden">
+  <div class="modal-panel" style="max-width:600px">
+    <h2>电脑</h2>
+    <div id="pc-content" style="line-height:2"></div>
+    <div class="modal-actions">
+      <button class="menu-btn small" id="pc-footer-btn">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-review" class="modal hidden">
+  <div class="modal-panel">
+    <h2 id="review-title">成就</h2>
+    <div id="review-list" style="line-height:2"></div>
+    <div class="modal-actions">
+      <button class="menu-btn small" data-action="review-close">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 全局脚本：传统方式按序加载，挂载到全局 WF 命名空间（双击 html 也可运行） -->
+<script src="js/core/version.js"></script>
+<script src="js/core/eventbus.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/audio.js"></script>
+<script src="js/core/save.js"></script>
+<script src="js/ui/toast.js"></script>
+<script src="js/ui/dialogue-view.js"></script>
+<script src="js/ui/actor-view.js"></script>
+<script src="js/ui/people-view.js"></script>
+<script src="js/ui/notify.js"></script>
+<script src="js/ui/map-view.js"></script>
+<script src="js/ui/action-panel.js"></script>
+<script src="js/ui/profile-view.js"></script>
+<script src="js/ui/phone-view.js"></script>
+<script src="js/ui/pc-view.js"></script>
+<script src="js/ui/save-view.js"></script>
+<script src="js/ui/minigame-view.js"></script>
+<script src="js/data/pc.js"></script>
+<script src="js/data/poems.js"></script>
+<script src="js/systems/daycycle.js"></script>
+<script src="js/systems/sidequest.js"></script>
+<script src="js/systems/course.js"></script>
+<script src="js/systems/encounter.js"></script>
+<script src="js/core/engine.js"></script>
+<script src="js/data/characters.js"></script>
+<script src="js/data/achievements.js"></script>
+<script src="js/data/locations.js"></script>
+<script src="js/data/chapters/ch01.js"></script>
+<script src="js/data/chapters/ch02.js"></script>
+<script src="js/data/chapters/ch03.js"></script>
+<script src="js/data/chapters/ch04.js"></script>
+<script src="js/data/chapters/ch05.js"></script>
+<script src="js/data/chapters/ch06.js"></script>
+<script src="js/data/chapters/ch07.js"></script>
+<script src="js/data/chapters/ch08.js"></script>
+<script src="js/data/chapters/ch09.js"></script>
+<script src="js/data/chapters/ch10.js"></script>
+<script src="js/data/chapters/ch11.js"></script>
+<script src="js/data/chapters/ch12.js"></script>
+<script src="js/data/chapters/ch13.js"></script>
+<script src="js/data/chapters/sq_lib_01.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
