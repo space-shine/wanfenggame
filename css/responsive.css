@@ -1,0 +1,49 @@
+/* ============================================================
+   双端适配：PC / 手机（手机横屏优先）
+   ============================================================ */
+
+/* ---------- 手机端（含横屏） ---------- */
+@media (pointer: coarse) {
+  .menu-btn { padding: 10px 22px; }
+  .hud-icon { padding:8px 12px; }      /* 增大触控区 */
+  .choice-btn { padding:16px 20px; }
+}
+
+/* 手机横屏：压缩纵向留白，HUD 与对话更紧凑 */
+@media (max-width: 960px) and (orientation: landscape) {
+  .hud-top { padding:6px 12px; }
+  .hud-date, .hud-location { font-size:13px; }
+  .hud-icon { font-size:12px; padding:5px 9px; }
+  .scene-tag { top:46px; left:14px; }
+
+  .dialogue-area { padding:0 10px 8px; }
+  .dialogue-box { min-height:0; padding:10px 14px 10px 84px; }
+  .speaker-portrait { width:52px; height:52px; left:14px; font-size:20px; }
+  .speaker-name { font-size:13px; padding:2px 12px; margin-bottom:4px; }
+  .dialogue-text, .narration-text { line-height:1.6; }
+  .narration-box { padding:12px 18px; }
+  .choice-box { gap:7px; }
+  .choice-btn { padding:10px 16px; }
+  .continue-hint { margin-top:4px; font-size:11px; }
+
+  .main-menu { margin-top:1.6em; gap:8px; }
+  .game-sub { margin-top:.2em; }
+  .title-version { margin-top:1.2em; }
+}
+
+/* 手机竖屏：提示横屏（文档要求手机端横屏） */
+@media (max-width: 720px) and (orientation: portrait) {
+  body::after {
+    content:"请旋转设备至横屏体验";
+    position:fixed; inset:0; z-index:99;
+    display:flex; align-items:center; justify-content:center;
+    background:#1a242c; color:var(--paper);
+    font-size:20px; letter-spacing:.2em; text-align:center; padding:30px;
+  }
+}
+
+/* ---------- 小尺寸 PC 窗口 ---------- */
+@media (max-width: 900px) and (pointer: fine) {
+  .dialogue-box { padding-left:90px; }
+  .speaker-portrait { width:56px; height:56px; }
+}

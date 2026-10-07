@@ -1,0 +1,303 @@
+/* ============================================================
+   存档界面 + 存档动画
+   ============================================================ */
+.save-anim {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 24px;
+  background: rgba(44,68,61,.92);
+  color: #f7f1e6;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: .08em;
+  box-shadow: 0 8px 26px rgba(0,0,0,.35);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.save-anim.show { opacity: 1; }
+.save-anim .spin {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(247,241,230,.35);
+  border-top-color: #e7c458;
+  border-radius: 50%;
+  animation: save-spin .8s linear infinite;
+}
+@keyframes save-spin { to { transform: rotate(360deg); } }
+
+/* ---------------- 单开页面 ---------------- */
+#modal-save {
+  background: rgba(20,28,34,.85);
+  backdrop-filter: blur(3px);
+}
+#modal-save .save-page {
+  position: fixed; inset: 0;
+  background: #f5efe0;
+  display: flex;
+  overflow: hidden;
+  color: #2e2a26;
+}
+
+/* 左侧 */
+#modal-save .save-side {
+  width: 320px;
+  flex-shrink: 0;
+  background: #efe8d8;
+  border-right: 2px solid #ddd0b6;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+#modal-save .save-back {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: #8a7a5a;
+  cursor: pointer;
+  letter-spacing: .08em;
+  border-bottom: 1px solid #ddd0b6;
+}
+#modal-save .save-back:hover { color: var(--wind); background: #e6ddc6; }
+#modal-save .save-side-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: #5a4a3a;
+  padding: 18px 20px 12px;
+  margin: 0;
+  letter-spacing: .12em;
+}
+#modal-save .save-tabs {
+  display: flex; gap: 6px;
+  padding: 0 20px 14px;
+  border-bottom: 1px solid #ddd0b6;
+}
+#modal-save .save-import-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #fff;
+  border: 1px solid #ddd0b6;
+  color: #5a4a3a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: .1em;
+  transition: all .2s;
+}
+#modal-save .save-import-btn:hover {
+  background: var(--wind);
+  color: #fff;
+  border-color: var(--wind);
+  box-shadow: 0 3px 10px rgba(217,131,72,.3);
+}
+
+/* 槽位列表 */
+#modal-save .save-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+#modal-save .save-list-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s ease;
+  border: 1px solid transparent;
+}
+#modal-save .save-list-item:hover { background: #e6ddc6; }
+#modal-save .save-list-item.on {
+  background: #d9cbaa;
+  border-color: var(--wind);
+}
+#modal-save .save-list-num {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #3f5d54, #2c443d);
+  color: #e7c458;
+  border-radius: 50%;
+  font-size: 13px; font-weight: 700;
+  font-family: var(--serif);
+  flex-shrink: 0;
+}
+#modal-save .save-list-item.empty .save-list-num {
+  background: #d8cdb8;
+  color: #8a7a5a;
+}
+#modal-save .save-list-info { flex: 1; min-width: 0; }
+#modal-save .save-list-name {
+  font-size: 14px; font-weight: 600; color: #2e2a26;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+#modal-save .save-list-item.empty .save-list-name {
+  color: #a3956f; font-weight: 400;
+}
+#modal-save .save-list-sub {
+  font-size: 12px; color: #8a7a5a;
+  margin-top: 2px;
+}
+
+/* 右侧详情 */
+#modal-save .save-detail {
+  flex: 1;
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+#modal-save .save-empty {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  color: #b3a892;
+  font-size: 15px;
+  letter-spacing: .12em;
+}
+#modal-save .save-detail-hero {
+  height: 240px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+#modal-save .save-detail-hero-mask {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.65) 100%);
+}
+#modal-save .save-detail-hero-text {
+  position: absolute;
+  bottom: 24px; left: 32px; right: 32px;
+  color: #fff;
+}
+#modal-save .save-detail-day {
+  font-family: var(--serif);
+  font-size: 32px; font-weight: 700;
+  letter-spacing: .1em;
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  margin-bottom: 6px;
+}
+#modal-save .save-detail-loc {
+  font-size: 15px; letter-spacing: .15em;
+  opacity: .95;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+#modal-save .save-detail-body {
+  padding: 24px 32px 32px;
+}
+#modal-save .save-detail-title-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 6px;
+}
+#modal-save .save-detail-title-input {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 700;
+  color: #5a4a3a;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 4px 0;
+  letter-spacing: .08em;
+  transition: border-color .2s;
+}
+#modal-save .save-detail-title-input:focus {
+  outline: none;
+  border-bottom-color: var(--wind);
+}
+#modal-save .save-edit-btn {
+  padding: 6px 16px;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #ddd0b6;
+  color: #8a7a5a;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all .2s;
+}
+#modal-save .save-edit-btn:hover {
+  background: var(--wind);
+  color: #fff;
+  border-color: var(--wind);
+}
+#modal-save .save-detail-sub {
+  font-size: 13px; color: #a3956f;
+  letter-spacing: .06em;
+  margin-bottom: 24px;
+}
+#modal-save .save-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+#modal-save .save-detail-cell {
+  padding: 14px;
+  background: #faf5eb;
+  border-radius: 10px;
+  border: 1px solid #e6ddc6;
+  text-align: center;
+}
+#modal-save .sdc-label {
+  font-size: 12px; color: #a3956f;
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+#modal-save .sdc-val {
+  font-size: 16px; font-weight: 700;
+  color: #5a4a3a;
+  font-family: var(--serif);
+}
+#modal-save .save-detail-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid #e6ddc6;
+}
+#modal-save .save-action-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  letter-spacing: .1em;
+  background: #fff;
+  border: 1px solid #ddd0b6;
+  color: #5a4a3a;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all .2s;
+}
+#modal-save .save-action-btn:hover {
+  background: var(--wind);
+  color: #fff;
+  border-color: var(--wind);
+  transform: translateY(-1px);
+}
+#modal-save .save-action-btn.primary {
+  background: linear-gradient(135deg, #3f5d54, #2c443d);
+  color: #f7f1e6;
+  border-color: transparent;
+}
+#modal-save .save-action-btn.primary:hover {
+  background: linear-gradient(135deg, #d98348, #b5642f);
+}
+#modal-save .save-action-btn.danger {
+  color: #b34b3b;
+  border-color: #d9a89e;
+}
+#modal-save .save-action-btn.danger:hover {
+  background: #b34b3b;
+  color: #fff;
+  border-color: #b34b3b;
+}
+#modal-save .save-detail-hint {
+  font-size: 13px; color: #a3956f;
+  letter-spacing: .1em;
+}
+
+/* 滚动条 */
+#modal-save .save-list::-webkit-scrollbar,
+#modal-save .save-detail::-webkit-scrollbar {
+  width: 6px;
+}
+#modal-save .save-list::-webkit-scrollbar-thumb,
+#modal-save .save-detail::-webkit-scrollbar-thumb {
+  background: rgba(217,131,72,.35);
+  border-radius: 3px;
+}

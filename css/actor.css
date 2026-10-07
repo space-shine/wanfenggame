@@ -1,0 +1,46 @@
+/* ============================================================
+   对话前景立绘（男主左 / NPC 右）
+   ============================================================ */
+.actor-slot {
+  position: absolute;
+  bottom: -2%;
+  height: 92%;
+  width: auto;
+  z-index: 10;
+  opacity: 0;
+  transform: scale(.98);
+  transition: opacity .4s ease, transform .4s ease, filter .4s ease;
+  pointer-events: none;
+  filter: brightness(.55) saturate(.5);
+}
+.actor-slot.show { opacity: .85; }
+.actor-slot.active {
+  opacity: 1;
+  filter: brightness(1.05) saturate(1.05)
+          drop-shadow(0 0 22px rgba(255, 226, 180, .55))
+          drop-shadow(0 10px 26px rgba(20, 28, 34, .4));
+  transform: scale(1.02);
+  z-index: 12;
+}
+
+.actor-left  { left: 1.5%; }
+.actor-right { right: 1.5%; }
+
+.actor-slot img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+/* 手机横屏：立绘略放大占比，保证人物清晰 */
+@media (max-width: 960px) and (orientation: landscape) {
+  .actor-slot { height: 86%; }
+  .actor-left { left: 0; }
+  .actor-right { right: 0; }
+}
+
+/* 舍友立绘（方形半身像）单独处理：只占屏幕 55% 高度，靠底 */
+.actor-slot.actor-half {
+  height: 55%;
+  bottom: 0;
+}
